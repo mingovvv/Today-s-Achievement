@@ -18,16 +18,16 @@
             "name" : "devyu",
             "age" : 11,
             "location" : "seoul",
-            "friend" : {"name" : "ISB", "age" : 28},
-            "familly" : ["father", "mother", "sister"]
+            "friend" : {"name" : "ISB", "age" : 28}, // 객체
+            "familly" : ["father", "mother", "sister"] // 배열
         }
         
   - JSON null 가능
 
 ### JSON과 Object
- - 라이브러리를 통해 JSON ↔ Object(객체) 사이는 쉽게 변환이 가능하다.
+ - 라이브러리를 통해 JSON ↔ Object(객체) 사이는 변환이 가능하다.
 
-### JSON 라이브러리
+### JSON 변환 라이브러리
 [라이브러리 속도 비교](#http://www.yunsobi.com/blog/entry/java-json-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%B3%84-parser-%EC%86%8D%EB%8F%84-%EB%B9%84%EA%B5%90)
  - Jackson
  - Gson
@@ -39,14 +39,11 @@
 
 Getter를 사용하지 않는 데이터 매핑 방식
 
-    // {"nickname":devyu"}
+    // json 출력 : {"nickname":devyu"}
     public class Person {
         @JsonProperty("nickName")
         private String name = "devyu";
     }                                          
-                                          
-    
 
-### JSON Parsing
 
  
