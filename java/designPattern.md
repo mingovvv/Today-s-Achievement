@@ -33,9 +33,64 @@
 
 ## 빌더 패턴(Builder Pattern)
 > 빌더 패턴은 객체를 생성할 때 패턴이다. 신입때 사내 프로젝트를 뒤적거리면서 처음 접했던 디자인 패턴이였다.
+생성자로 너무 많은 인자가 넘겨지는 경우 어떠한 인자가 어떠한 값을 나타내는지 확인하기 힘들다. 그로 인해 생겨난 디자인 패턴.
 
-    
+```
+public class Student {
+    private long id;
+    private String name;
+    private String major;
+    private int age;
+    private String address;
+    private String gender;
+    private String phone;
+
+    public Student(long id, String name, String major, int age, String address, String gender, String phone) {
+        this.id = id;
+        this.name = name;
+        this.major = major;
+        this.age = age;
+        this.address = address;
+        this.gender = gender;
+        this.phone = phone;
+    }
+}
+
+```
+
+```
+public static void main(String[] args) {
+    Student s = new Student(1,"park", "math", 30, "서울", "남자", "010-000-0000");
+}
+```
   
+```
+public static class Builder {
+        // 필수
+        private final long id;
+        private final String name;
+        private final String major;
+        
+        // 선택
+        private int age;
+        private String address;
+        private String gender;
+        private String phone;
+
+        public Builder(long id, String name, String major) {
+            this.id = id;
+            this.name = name;
+            this.major = major;
+        }
+        
+        public Builder age(int age){
+            this.age = age;
+            return this;
+        }
+        
+        ...
+    }
+```
 
 ##### 출처
 https://jdm.kr/blog/217
