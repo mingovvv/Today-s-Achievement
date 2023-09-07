@@ -5,8 +5,8 @@
 
 1. SRP : 단일 책임 원칙(single responsibility principle)
    > 하나의 클래스는 하나의 **책임**을 가져야 한다. <br>
-여기서 의미하는 **책임**은 변경이 발생 하였을 때, 그에 따른 파급효과가 작은 것이 **단일 책임 원칙**을 잘 따랐다고 볼 수 있다. <br><br>
-ex) DTO를 내부에 객체 생성을 위한 정적메서드를 만들어 객체의 생성과 사용을 분리
+여기서 의미하는 **책임**은 변경이 발생 하였을 때, 그에 따른 파급효과가 작은 것이 **단일 책임 원칙**을 잘 따랐다고 볼 수 있다. <<br><br>
+ex) <br> 1. DTO를 내부에 객체 생성을 위한 정적메서드를 만들어 객체의 생성과 사용을 분리 <br> 2. 클라이언트는 객체를 실행만 하고 생성 및 연결은 config에서 담당함.
 
 2. OCP : 개방-폐쇄 원칙(open/closed principle)
    > 확장에는 열려있으나 변경에는 닫혀 있어야 한다. <br>
@@ -74,6 +74,10 @@ public class AppConfig {
       // Jdbc DB 사용을 위한 생성자 주입
       return new MemberService(new JdbcMemberRepository());
    }
+   
+   ...
 
 }
 ```
+
+![img.png](img.png)
