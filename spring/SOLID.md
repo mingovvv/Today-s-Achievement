@@ -28,7 +28,52 @@ ex) 배우의 경우, 배역이라는 역할(interface)에 의존해야지 배�
 
 
 ----
+#### 예제코드
+``` java
+class MemberService {
+   
+   // 메모리 DB - 사용안함 주석처리
+   // MemberRepository m = new MemoryMemberRepository();
+   
+   // Jdbc DB - 사용
+   MemberRepository m = new JdbcMemberRepository();
+   
+   ...
+   
+}
+```
+#### OCP, DIP 위반발생
+> 위 코드는 MemberService 에서 구현클래스를 직접 선택하고 있어 OCP, DIP 원칙에 위반된다. 사실 다형성만으로는 OCP, DIP를 지킬 수 없다.
+<br> **OCP 위반** : `MemberService` 는 repository source를 바꾸려면 소스수정이 필요하다. 
+<br> **DIP 위반** : `MemberService` 는 `MemberRepository` 인터페이스에 의존하면서 DIP를 지킨 것 같아보이지만, 실상은 추상(MemberRepository)뿐만 아니라, 구현 클래스(MemoryMemberRepository)에도 의존하고 있는 셈이다.
+<br><br> 스프링의 DI/DI container를 통하여 다형성 + OCP, DIP를 지원 !!! (클라이언트의 코드 변경없이 기능 확장가능)
 
-> MemberRepository m = new MemoryMemberRepository(); // OCP, DIP 위반 <br><br>
-위 코드는 MemberService 에서 구현클래스를 직접 선택하고 있어 DIP 원칙에 위반된다. 사실 다형성만으로는 OCP, DIP를 지킬 수 없다.
-<br> 스프링의 DI/DI container를 통하여 다형성 + OCP, DIP를 지원 !!! (클라이언트의 코드 변경없이 기능 확장가능)
+#### 해결방안
+> 인터페이스에만 의존하도록 코드를 변경한다. <br> 
+How? 애플리케이션의 전체 동작 방식을 구성하기 위해, 구현 객체를 생성/연결하는 책임을 가지는 별도의 설정 클래스를 따로 두는 것. **생성/연결과 실행의 분리**
+
+```java
+class MemberService {
+
+   // 인터페이스에만 의존하며 구현객체는 생성자 주입을 통해 전달받자
+   MemberRepository m;
+
+   // 생성자 주입. 해당 인터페이스의 구현객체는 MemberService의 입장에서는 알 수 없다.
+   // OCP, DIP를 모두 충족한 바람직한 코드가 완성됨.
+   public MemberService(MemberRepository m) {
+      this.m = m;
+   }
+   
+   ...
+
+}
+
+public class AppConfig {
+
+   public MemberService memberService() {
+      // Jdbc DB 사용을 위한 생성자 주입
+      return new MemberService(new JdbcMemberRepository());
+   }
+
+}
+```
