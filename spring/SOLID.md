@@ -80,4 +80,4 @@ public class AppConfig {
 }
 ```
 
-![img.png](img.png)
+![img.png](images/img.png)
